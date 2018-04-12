@@ -16,7 +16,7 @@
       <file leaf-file-name="ListInterfaceTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/ListInterfaceTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-6201">
+            <state relative-caret-position="-6965">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -228,12 +228,12 @@
       <workItem from="1523530975287" duration="4728000" />
       <workItem from="1523538324146" duration="544000" />
       <workItem from="1523552907600" duration="2969000" />
-      <workItem from="1523556661487" duration="6633000" />
+      <workItem from="1523556661487" duration="7058000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25017000" />
+    <option name="totallyTimeSpent" value="25442000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -373,7 +373,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/ListInterfaceTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-6201">
+        <state relative-caret-position="-6965">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
