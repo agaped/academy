@@ -14,14 +14,15 @@ public class Main {
         List<Integer> linkedList=new LinkedList<Integer>();
         List<Integer> arrayList=new ArrayList<Integer>();
 
+
         for (Method m : testMethods) {
 
             m.invoke(null, linkedList);
             linkedList.clear();
             m.invoke(null, arrayList);
             arrayList.clear();
-        }
 
+        }
     }
 
 }

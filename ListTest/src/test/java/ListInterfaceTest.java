@@ -1,4 +1,4 @@
-
+import java.util.Arrays;
 import java.util.List;
 
 public class ListInterfaceTest {
@@ -7,7 +7,7 @@ public class ListInterfaceTest {
         //given
 
         //when
-       list.add(3);
+        list.add(3);
 
         //then
         assert list.size() == 1 : "element not added";
@@ -23,7 +23,6 @@ public class ListInterfaceTest {
     }
 
     //-----------------------------------------------------
-
     public static void addElementToFirstIndex(List list) {
         //given
         list.add(4);
@@ -65,10 +64,9 @@ public class ListInterfaceTest {
     }
 
     //-------------------------------------------------------
-
     public static void addNewCollectionAtTheEndOfEmptyList(List list) {
         //given
-        List secondList =list;
+        List secondList = list;
 
         secondList.add(2);
         secondList.add(3);
@@ -83,12 +81,9 @@ public class ListInterfaceTest {
 
     public static void addNewCollectionAtTheEnd(List list) {
         //given
-        List secondList = list;
+        List secondList = Arrays.asList(2, 3, 4);
 
         list.add(7);
-        secondList.add(2);
-        secondList.add(3);
-        secondList.add(4);
 
         //when
         list.addAll(secondList);
@@ -98,15 +93,12 @@ public class ListInterfaceTest {
     }
 
     //---------------------------------------------------------
-
     public static void addNewCollectionAtTheBeginning(List list) {
         //given
-        List secondList = list;
+        List secondList = Arrays.asList(5, 6);
 
         list.add(3);
         list.add(4);
-        secondList.add(5);
-        secondList.add(6);
 
         //when
         list.addAll(0, secondList);
@@ -119,12 +111,10 @@ public class ListInterfaceTest {
 
     public static void addNewCollectionAtMissingIndex(List list) {
         //given
-        List secondList = list;
+        List secondList = Arrays.asList(5, 6);
 
         list.add(3);
         list.add(4);
-        secondList.add(5);
-        secondList.add(6);
 
         //when
         try {
@@ -140,12 +130,10 @@ public class ListInterfaceTest {
 
     public static void addNewCollectionAtNegativeIndex(List list) {
         //given
-        List secondList = list;
+        List secondList = Arrays.asList(5, 6);
 
         list.add(3);
         list.add(4);
-        secondList.add(5);
-        secondList.add(6);
 
         //when
         try {
@@ -186,7 +174,6 @@ public class ListInterfaceTest {
     }
 
     //--------------------------------------------------
-
     public static void emptyListContainsAnyElement(List list) {
         //given
         List secondList = list;
@@ -222,17 +209,12 @@ public class ListInterfaceTest {
     }
 
     //----------------------------------------------------
-
     public static void emptyListContainsCollection(List list) {
         //given
-        List secondList = list;
-
-        secondList.add(2);
-        secondList.add(3);
-        secondList.add(6);
+        List secondList = Arrays.asList(2, 3, 6);
 
         //when
-        boolean result=list.containsAll(list);
+        boolean result = list.containsAll(secondList);
 
         // then
         assert result == false : "emptyList contains list with elements";
@@ -240,16 +222,14 @@ public class ListInterfaceTest {
 
     public static void listContainsCollection(List list) {
         //given
-        List secondList = list;
+        List secondList = Arrays.asList(5);
 
         list.add(3);
         list.add(5);
         list.add(7);
 
-        secondList.add(5);
-
         //when
-        boolean result=list.containsAll(secondList);
+        boolean result = list.containsAll(secondList);
 
         //then
         assert result == true : "firstList does not contain secondList";
@@ -264,25 +244,85 @@ public class ListInterfaceTest {
         list.add(6);
 
         //when
-        boolean result=list.containsAll(secondList);
+        boolean result = list.containsAll(secondList);
 
         //then
         assert result : "firstList does not contain empty list";
     }
 
     //--------------------------------------------------
-//    public static void (){
-//    //given
-//
-//    //when
-//
-//    //then
-//    assert  :"";
-//    }
+    public static void checkEqualityOfReferences(List list) {
+        //given
+        List secondList = list;
+
+        list.add(4);
+        list.add(5);
+        list.add(6);
+        //when
+        boolean result = list.equals(secondList);
+
+        //then
+        assert result : "references are not the same";
+    }
+
+    public static void checkEqualityOfValues(List list) {
+        //given
+        List secondList = Arrays.asList(4, 5, 6);
+
+        list.add(4);
+        list.add(5);
+        list.add(6);
+        //when
+        boolean result = list.equals(secondList);
+
+        //then
+        assert result : "lists have different values";
+    }
+
+    public static void checkEqualityOfDiffrentLists(List list) {
+        //given
+        List secondList = Arrays.asList(2, 1);
+
+        list.add(4);
+        list.add(5);
+        list.add(6);
+        //when
+        boolean result = list.equals(secondList);
+
+        //then
+        assert result == false : "list are equal";
+    }
 
     //--------------------------------------------------
+    public static void checkHashcodeOnEqualLists(List list) {
+        //given
+        List secondList = Arrays.asList(2, 1);
 
+        list.add(2);
+        list.add(1);
+        //when
+        int hashcode1 = list.hashCode();
+        int hashcode2 = secondList.hashCode();
 
+        //then
+        assert hashcode1 == hashcode2 : "hashcodes are diffrent";
+    }
+
+    public static void checkHashcodeOnNotEqualsLists(List list) {
+        //given
+        List secondList = Arrays.asList(1, 2);
+
+        list.add(2);
+        list.add(1);
+        //when
+        int hashcode1 = list.hashCode();
+        int hashcode2 = secondList.hashCode();
+
+        //then
+        assert hashcode1 != hashcode2 : "hashcodes are the same";
+    }
+
+    //-----------------------------------------------------
     public static void isEmptyListEmpty(List list) {
         //given
 
@@ -303,25 +343,96 @@ public class ListInterfaceTest {
     }
 
     //----------------------------------------------------------
+    public static void returnIndexOfMissingElement(List list) {
+        //given
+        list.add(2);
+        Object result = -1;
+        //when
+        try {
+            result = list.get(4);
+        } catch (IndexOutOfBoundsException e) {
 
+        }
+        //then
+        assert result.equals(-1) : "list contains missing element";
+    }
 
-//    public static void testRemoveElementFromEmptyList(List list) {
-//        //given
-//
-//        //when
-//
-//        //then
-//        assert  list.remove(3):"";
-//    }
-//
-//    public static void testRemoveExistingElement(List list) {
-//        //given
-//        List<Integer> firstList = new LinkedList<Integer>();
-//        //when
-//        firstList = Arrays.asList(2, 4, 6);
-//        //then
-//
-//    }
+    public static void returnIndexOfExistingElement(List list) {
+        //given
+        list.add(2);
+        list.add(1);
 
+        //when
+        Object result = list.get(0);
+
+        //then
+        assert result.equals(2) : "list does not contain existing element";
+    }
+
+    //----------------------------------------------------------
+    public static void returnLastIndexOfElementInEmptyList(List list) {
+        //given
+
+        //when
+        Object result = list.lastIndexOf(2);
+
+        //then
+        assert result.equals(-1) : "should return -1";
+    }
+
+    public static void returnLastIndexOfExistingElement(List list) {
+        //given
+        list.add(1);
+        list.add(3);
+        list.add(3);
+        list.add(3);
+        //when
+        Object result = list.lastIndexOf(3);
+
+        //then
+        assert result.equals(3) : "does not return last index of the element";
+    }
+
+    //----------------------------------------------------------
+    public static void removeElementFromEmptyList(List list) {
+        //given
+
+        //when
+        try {
+            list.remove(3);
+        } catch (IndexOutOfBoundsException e) {
+
+        }
+        //then
+        assert list.isEmpty() : "does not throw exception";
+    }
+
+    public static void removeExistingElement(List list) {
+        //given
+        list.add(1);
+        list.add(3);
+
+        //when
+        Object result = list.remove(0);
+
+        //then
+        assert result.equals(1) : "element not removed";
+    }
+
+    public static void checkIfElementsAreShiftedTotheLeft(List list) {
+        //given
+        list.add(1);
+        list.add(3);
+        list.add(4);
+
+        //when
+        list.remove(0);
+
+        //then
+        assert list.get(0).equals(3) : "element not shifted to the left";
+        assert list.get(1).equals(4) : "element not shifted to the left";
+    }
+
+    //---------------------------------------------------------------
 
 }
