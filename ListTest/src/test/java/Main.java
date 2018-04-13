@@ -11,8 +11,8 @@ public class Main {
         Class testClass= ListInterfaceTest.class;
         Method[] testMethods=testClass.getDeclaredMethods();
 
-        List<Integer> linkedList=new LinkedList<Integer>();
-        List<Integer> arrayList=new ArrayList<Integer>();
+        List<Object> linkedList=new LinkedList();
+        List<Object> arrayList=new ArrayList();
 
 
         for (Method m : testMethods) {
