@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 public class ListInterfaceTest {
@@ -442,6 +443,29 @@ public class ListInterfaceTest {
     }
 
     //----------------------------------------------------------
+    public static void checkInstanceOfIterator(List list) {
+        //given
+        Iterator<Object> iterator = list.iterator();
+
+        //when
+
+        //then
+        assert iterator instanceof Iterator : "wrong type of iterator";
+    }
+
+    //----------------------------------------------------------
+    public static void checkInstanceOfListIterator(List list) {
+        //given
+        Iterator<Object> listIterator = list.iterator();
+
+        //when
+
+        //then
+        assert listIterator instanceof Iterator : "wrong type of iterator";
+    }
+
+    //----------------------------------------------------------
+
     public static void returnLastIndexOfElementInEmptyList(List list) {
         //given
         Object object = new Object();
@@ -476,10 +500,10 @@ public class ListInterfaceTest {
         Object object = new Object();
 
         //when
-        boolean flag= list.remove(object);
+        boolean flag = list.remove(object);
 
         //then
-        assert flag==false : "removes element not from the list";
+        assert flag == false : "removes element not from the list";
     }
 
     public static void removeExistingElement(List list) {
@@ -516,5 +540,201 @@ public class ListInterfaceTest {
     }
 
     //---------------------------------------------------------------
+
+    public static void removeNegativeIndex(List list) {
+        //given
+        Object object = new Object();
+        Object object1 = new Object();
+        Object object2 = new Object();
+
+        list.add(object);
+        list.add(object1);
+        list.add(object2);
+
+        //when
+        boolean flag = false;
+        try {
+            list.remove(-2);
+        } catch (IndexOutOfBoundsException e) {
+            flag = true;
+        }
+        //then
+        assert flag : "removes negative index";
+    }
+
+    public static void removeExistingIndex(List list) {
+        //given
+        Object object = new Object();
+        Object object1 = new Object();
+        Object object2 = new Object();
+
+        list.add(object);
+        list.add(object1);
+        list.add(object2);
+        //when
+
+        Object result = list.remove(1);
+
+        //then
+        assert result.equals(object1) : "removes wrong index";
+    }
+
+    public static void removeIndexFromEmptyList(List list) {
+        //given
+
+        //when
+        boolean flag = false;
+        try {
+            list.remove(5);
+        } catch (IndexOutOfBoundsException e) {
+            flag = true;
+        }
+        //then
+        assert flag : "removes not existing index";
+    }
+
+    //---------------------------------------------------------------
+    public static void removeAnotherListFromEmptyList(List list) {
+        //given
+        Object object = new Object();
+        Object object1 = new Object();
+        Object object2 = new Object();
+
+        List secondList = Arrays.asList(object, object1, object2);
+
+        //when
+        boolean result = list.removeAll(secondList);
+
+        //then
+        assert result == false : "removes elements from empty list";
+    }
+
+    public static void removeAnotherListFromExistingList(List list) {
+        //given
+        Object object = new Object();
+        Object object1 = new Object();
+        Object object2 = new Object();
+
+        List secondList = Arrays.asList(object, object1, object2);
+
+        list.add(object);
+
+        //when
+        boolean result = list.removeAll(secondList);
+
+        //then
+        assert result : "elements not removed";
+    }
+
+    public static void removeListWithDiffrentElements(List list) {
+        //given
+        Object object = new Object();
+        Object object1 = new Object();
+        Object object2 = new Object();
+
+        List secondList = Arrays.asList(object, object1);
+
+        list.add(object2);
+
+        //when
+        boolean result = list.removeAll(secondList);
+
+        //then
+        assert result == false : "elements removed";
+
+    }
+
+    //---------------------------------------------------------------
+//    Do : test for replaceAll
+    //---------------------------------------------------------------
+
+    public static void retainCommonElements(List list) {
+        //given
+        Object object = new Object();
+        Object object1 = new Object();
+        Object object2 = new Object();
+
+        List secondList = Arrays.asList(object, object1);
+
+        list.add(object);
+        list.add(object1);
+        list.add(object2);
+
+        //when
+        boolean result = list.retainAll(secondList);
+
+        //then
+        assert result : "elements not removed";
+    }
+
+    public static void checkRetainAllOnNotEqualList(List list) {
+        //given
+        Object object = new Object();
+        Object object1 = new Object();
+        Object object2 = new Object();
+
+        List secondList = Arrays.asList(object, object1, object2);
+
+
+        //when
+        boolean result = list.retainAll(secondList);
+
+        //then
+        assert result == false : "elements removed";
+    }
+
+    //---------------------------------------------------------------
+    public static void setElementInTheList(List list) {
+        //given
+        Object object = new Object();
+        Object object1 = new Object();
+        Object object2 = new Object();
+
+        list.add(object);
+        list.add(object1);
+
+        //when
+        list.set(0, object2);
+
+        //then
+        assert list.get(0).equals(object2) : "element not set";
+    }
+
+    public static void setElementOnNegativeIndex(List list) {
+        //given
+        Object object = new Object();
+        Object object1 = new Object();
+        Object object2 = new Object();
+
+        list.add(object);
+        list.add(object1);
+
+        //when
+        boolean flag = false;
+        try {
+            list.set(-3, object2);
+        } catch (IndexOutOfBoundsException e) {
+            flag = true;
+        }
+        //then
+        assert flag : "element not set on negative index";
+    }
+
+    public static void setNullElement(List list) {
+        //given
+        Object object = new Object();
+        Object object1 = new Object();
+
+        list.add(object);
+        list.add(object1);
+
+        //when
+        Object result=list.set(0, null);
+        //then
+        assert result==object : "null element not set";
+    }
+
+    //---------------------------------------------------------------
+
 
 }
