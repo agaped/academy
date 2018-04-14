@@ -1,6 +1,7 @@
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Spliterator;
 
 public class ListInterfaceTest {
 
@@ -734,6 +735,121 @@ public class ListInterfaceTest {
         assert result==object : "null element not set";
     }
 
+    //---------------------------------------------------------------
+    public static void sizeOfEmptyList(List list) {
+        //given
+
+        //when
+
+        //then
+        assert list.size()==0 : "empty list is not empty";
+    }
+
+    public static void sizeOfListWithNullElements(List list) {
+        //given
+
+        //when
+        list.add(null);
+        list.add(null);
+        list.add(null);
+        //then
+        assert list.size()==3 : "size should be 3";
+    }
+    //---------------------------------------------------------------
+    public static void checkTypeOfSpliterator(List list) {
+        //given
+        Object object = new Object();
+        Object object1 = new Object();
+
+        //when
+        list.add(object);
+        Spliterator<Object> split = list.spliterator();
+
+        //then
+        assert split instanceof Spliterator : "wrong instance of Spliterator";
+    }
+
+    //---------------------------------------------------------------
+    public static void sublistWhenEndIndexGreaterThanStartIndex(List list) {
+        //given
+        List<Object> result=list;
+
+        Object object = new Object();
+        Object object1 = new Object();
+
+        list.add(object);
+        list.add(object1);
+
+        //when
+        boolean flag = false;
+        try {
+            list.subList(2,1);
+        } catch (IllegalArgumentException e) {
+            flag = true;
+        }
+        //then
+        assert flag : "exception not thrown";
+    }
+
+    public static void sublistWhenStartIndexIsNegative(List list) {
+        //given
+
+        Object object = new Object();
+        Object object1 = new Object();
+
+        list.add(object);
+        list.add(object1);
+
+        //when
+        boolean flag = false;
+        try {
+            list.subList(-11,0);
+        } catch (IndexOutOfBoundsException e) {
+            flag = true;
+        }
+        //then
+        assert flag : "exception not thrown";
+    }
+    //---------------------------------------------------------------
+    public static void toArrayOnEmptyList(List list) {
+        //given
+
+        //when
+        Object[] array=list.toArray();
+        //then
+        assert array.length==0 : "array is not empty";
+    }
+
+    public static void toArrayOnNotEmptyList(List list) {
+        //given
+        Object object = new Object();
+        Object object1 = new Object();
+
+        list.add(object);
+        list.add(object1);
+
+        //when
+        Object[] array=list.toArray();
+        //then
+        assert array.length==2 : "wrong array length";
+    }
+
+    public static void checkSequenceInToArray(List list) {
+        //given
+        Object object = new Object();
+        Object object1 = new Object();
+        Object object2 = new Object();
+
+        list.add(object);
+        list.add(object1);
+        list.add(object2);
+
+        //when
+        Object[] array=list.toArray();
+        //then
+        assert array[0].equals(object) : "elements in a wrong order";
+        assert array[2].equals(object2) : "elements in a wrong order";
+    }
     //---------------------------------------------------------------
 
 

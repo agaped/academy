@@ -11,7 +11,7 @@ public class Main {
         Class testClass= ListInterfaceTest.class;
         Method[] testMethods=testClass.getDeclaredMethods();
 
-        List<Object> linkedList=new LinkedList();
+        List<String> linkedList=new LinkedList();
         List<Object> arrayList=new ArrayList();
 
 
@@ -23,6 +23,7 @@ public class Main {
             arrayList.clear();
 
         }
+
     }
 
 }
