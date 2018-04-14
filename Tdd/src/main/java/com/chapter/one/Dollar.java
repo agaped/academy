@@ -2,13 +2,19 @@ package com.chapter.one;
 
 public class Dollar {
 
-     public int amount;
+     private int amount;
 
     public Dollar(int amount) {
         this.amount = amount;
     }
 
-    public void times(int multiplier){
+    public Dollar times(int multiplier){
+        return  new Dollar(multiplier*this.amount);
+    }
 
+    @Override
+    public boolean equals(Object obj) {
+        Dollar dollar=(Dollar) obj;
+        return this.amount==dollar.amount;
     }
 }
