@@ -1,6 +1,6 @@
 package com.chapter.one;
 
-public class Sum implements Expression{
+public class Sum implements Expression {
 
     Expression augend;
     Expression addend;
@@ -23,6 +23,9 @@ public class Sum implements Expression{
         return new Sum(this,addend);
     }
 
-
+    public boolean equals(Object o){
+        Sum sum=(Sum) o;
+        return augend.equals(sum.augend) && addend.equals(sum.addend);
+    }
 
 }

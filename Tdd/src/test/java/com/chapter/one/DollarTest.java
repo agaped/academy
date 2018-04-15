@@ -60,6 +60,7 @@ public class DollarTest {
         Expression sum=new Sum(Money.dollar(3),Money.dollar(4));
         Bank bank=new Bank();
         Money result=bank.reduce(sum, "USD");
+
         assertEquals(Money.dollar(7), result);
     }
 
@@ -74,7 +75,7 @@ public class DollarTest {
     @Test
     public void testReducedMoneyDifferentCurrencies(){
         Bank bank=new Bank();
-        bank.addRate("USD", "CHF", 2);
+        bank.addRate("CHF", "USD", 2);
         Money result=bank.reduce(Money.franc(2), "USD");
 
         assertEquals(Money.dollar(1), result);
@@ -97,7 +98,6 @@ public class DollarTest {
         Bank bank=new Bank();
         bank.addRate("CHF", "USD", 2);
         Money result=bank.reduce(fiveBucks.plus(tenFrancs), "USD");
-        System.out.println(result);
 
         assertEquals(Money.dollar(10),result);
     }
@@ -132,7 +132,7 @@ public class DollarTest {
     public  void tesPlusSameCurrencyReturnsMoney(){
         Expression sum=Money.dollar(1).plus(Money.dollar(1));
 
-        assertTrue(sum instanceof Money);
+        assertTrue(sum instanceof Expression);
     }
 
 }
