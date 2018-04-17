@@ -1,7 +1,4 @@
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Spliterator;
+import java.util.*;
 
 public class ListInterfaceTest {
 
@@ -111,6 +108,28 @@ public class ListInterfaceTest {
 
         //then
         assert list.size() == 3 : "list not added";
+    }
+
+    public static void addAllCheckIfThrowsUnsopportedOperationException(List list) {
+        //given
+        Object object = new Object();
+        Object object1 = new Object();
+
+        List testList = Arrays.asList(object, object1);
+
+        list.add(object);
+
+        //when
+        boolean flag = false;
+        try {
+            testList.addAll(list);
+        } catch (UnsupportedOperationException e) {
+            flag = true;
+        }
+
+        //then
+        assert flag : "does not throw UnsupportedOperationException";
+
     }
 
     //---------------------------------------------------------
@@ -730,9 +749,9 @@ public class ListInterfaceTest {
         list.add(object1);
 
         //when
-        Object result=list.set(0, null);
+        Object result = list.set(0, null);
         //then
-        assert result==object : "null element not set";
+        assert result == object : "null element not set";
     }
 
     //---------------------------------------------------------------
@@ -742,7 +761,7 @@ public class ListInterfaceTest {
         //when
 
         //then
-        assert list.size()==0 : "empty list is not empty";
+        assert list.size() == 0 : "empty list is not empty";
     }
 
     public static void sizeOfListWithNullElements(List list) {
@@ -753,8 +772,9 @@ public class ListInterfaceTest {
         list.add(null);
         list.add(null);
         //then
-        assert list.size()==3 : "size should be 3";
+        assert list.size() == 3 : "size should be 3";
     }
+
     //---------------------------------------------------------------
     public static void checkTypeOfSpliterator(List list) {
         //given
@@ -770,9 +790,39 @@ public class ListInterfaceTest {
     }
 
     //---------------------------------------------------------------
+
+    public static void sortByNullComparator(List list) {
+        //given
+        List<String> testList = Arrays.asList("B", "D", "A", "C");
+
+        //when
+        testList.sort(null);
+
+        //then
+        assert testList.get(0).equals("A") : "elements not sorted in a natural ordering";
+    }
+
+    //IllegalAccessException
+
+//    public static void sortByGivenComparator(List list) {
+//        //given
+//        list.add("A");
+//        list.add("B");
+//        list.add("C");
+//        list.add("D");
+//
+//        //when
+//        list.sort((a, b) -> -a.toString().compareTo(b.toString()));
+//
+//        //then
+//
+//        assert list.get(0).equals("D") : "elements not sorted";
+//    }
+
+    //---------------------------------------------------------------
     public static void sublistWhenEndIndexGreaterThanStartIndex(List list) {
         //given
-        List<Object> result=list;
+        List<Object> result = list;
 
         Object object = new Object();
         Object object1 = new Object();
@@ -783,7 +833,7 @@ public class ListInterfaceTest {
         //when
         boolean flag = false;
         try {
-            list.subList(2,1);
+            list.subList(2, 1);
         } catch (IllegalArgumentException e) {
             flag = true;
         }
@@ -803,21 +853,22 @@ public class ListInterfaceTest {
         //when
         boolean flag = false;
         try {
-            list.subList(-11,0);
+            list.subList(-11, 0);
         } catch (IndexOutOfBoundsException e) {
             flag = true;
         }
         //then
         assert flag : "exception not thrown";
     }
+
     //---------------------------------------------------------------
     public static void toArrayOnEmptyList(List list) {
         //given
 
         //when
-        Object[] array=list.toArray();
+        Object[] array = list.toArray();
         //then
-        assert array.length==0 : "array is not empty";
+        assert array.length == 0 : "array is not empty";
     }
 
     public static void toArrayOnNotEmptyList(List list) {
@@ -829,9 +880,9 @@ public class ListInterfaceTest {
         list.add(object1);
 
         //when
-        Object[] array=list.toArray();
+        Object[] array = list.toArray();
         //then
-        assert array.length==2 : "wrong array length";
+        assert array.length == 2 : "wrong array length";
     }
 
     public static void checkSequenceInToArray(List list) {
@@ -845,7 +896,7 @@ public class ListInterfaceTest {
         list.add(object2);
 
         //when
-        Object[] array=list.toArray();
+        Object[] array = list.toArray();
         //then
         assert array[0].equals(object) : "elements in a wrong order";
         assert array[2].equals(object2) : "elements in a wrong order";
