@@ -1,9 +1,9 @@
-*/.idea/
+*.idea
 */target/
 */.iml
 */.class
 */out/
-*\.idea\
+
 *\target\
 *\.iml
 *\.class
