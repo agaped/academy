@@ -147,6 +147,28 @@ public class ListInterfaceTest {
 
     }
 
+    public static void addAllCheckIfThrowsUnsopportedOperationException(List list) {
+        //given
+        Object object = new Object();
+        Object object1 = new Object();
+
+        List testList = Arrays.asList(object, object1);
+
+        list.add(object);
+
+        //when
+        boolean flag = false;
+        try {
+            testList.addAll(list);
+        } catch (UnsupportedOperationException e) {
+            flag = true;
+        }
+
+        //then
+        assert flag : "does not throw UnsupportedOperationException";
+
+    }
+
     //---------------------------------------------------------
     public static void addAll_addsNewCollectionAtTheBeginning(List list) {
         //given
@@ -800,7 +822,11 @@ public class ListInterfaceTest {
 
     //---------------------------------------------------------------
 
+<<<<<<< HEAD
     public static void sort_sortsByNullComparator(List list) {
+=======
+    public static void sortByNullComparator(List list) {
+>>>>>>> 9605ff328636c7af7c769b4e3310e87633f5244e
         //given
         List<String> testList = Arrays.asList("B", "D", "A", "C");
 
@@ -811,6 +837,26 @@ public class ListInterfaceTest {
         assert testList.get(0).equals("A") : "elements not sorted in a natural ordering";
     }
 
+<<<<<<< HEAD
+=======
+    //IllegalAccessException
+
+//    public static void sortByGivenComparator(List list) {
+//        //given
+//        list.add("A");
+//        list.add("B");
+//        list.add("C");
+//        list.add("D");
+//
+//        //when
+//        list.sort((a, b) -> -a.toString().compareTo(b.toString()));
+//
+//        //then
+//
+//        assert list.get(0).equals("D") : "elements not sorted";
+//    }
+
+>>>>>>> 9605ff328636c7af7c769b4e3310e87633f5244e
     //---------------------------------------------------------------
     public static void sublistWhenEndIndexGreaterThanStartIndex(List list) {
         //given
