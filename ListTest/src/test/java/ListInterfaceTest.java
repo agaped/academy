@@ -1,32 +1,29 @@
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Spliterator;
+import java.util.*;
 
 public class ListInterfaceTest {
 
-    public static void addElementToList(List list) {
+    public static void add_addsElementToList(List list) {
         //given
         Object object = new Object();
         //when
         list.add(object);
 
         //then
-        assert list.size() == 1 : "element not added";
+        assert list.get(list.size() - 1) == object : "element not added";
     }
 
-    public static void addNullToList(List list) {
+    public static void add_addsNullToList(List list) {
         //given
 
         //when
         list.add(null);
 
         //then
-        assert list.size() == 1 : "more than one element on the list";
+        assert list.get(list.size() - 1) == null : "more than one element on the list";
     }
 
     //-----------------------------------------------------
-    public static void addElementToFirstIndex(List list) {
+    public static void add_addsElementToTheFirstIndex(List list) {
         //given
         Object object = new Object();
         Object object1 = new Object();
@@ -40,7 +37,7 @@ public class ListInterfaceTest {
         assert list.get(0).equals(object1) : "element not added to the position 0";
     }
 
-    public static void addElementToNegativeIndex(List list) {
+    public static void add_addsElementToTheNegativeIndex(List list) {
         //given
         Object object = new Object();
         Object object1 = new Object();
@@ -60,7 +57,7 @@ public class ListInterfaceTest {
         assert flag : "element added to the negative position";
     }
 
-    public static void addElementToIndexInTheMiddle(List list) {
+    public static void add_addsElementToTheIndexInTheMiddle(List list) {
         //given
         Object object = new Object();
         Object object1 = new Object();
@@ -77,17 +74,14 @@ public class ListInterfaceTest {
     }
 
     //-------------------------------------------------------
-    public static void addNewCollectionAtTheEndOfEmptyList(List list) {
+    public static void addAll_addsNewCollectionAtTheEndOfEmptyList(List list) {
         //given
-        List secondList = list;
-
         Object object = new Object();
         Object object1 = new Object();
         Object object2 = new Object();
 
-        secondList.add(object);
-        secondList.add(object1);
-        secondList.add(object2);
+        List secondList = Arrays.asList(object, object1, object2);
+        list.clear();
 
         //when
         list.addAll(secondList);
@@ -96,7 +90,7 @@ public class ListInterfaceTest {
         assert list.equals(secondList) : "list not added";
     }
 
-    public static void addNewCollectionAtTheEnd(List list) {
+    public static void addAll_addsNewCollectionAtTheEndOfNotEmptyList(List list) {
         //given
         Object object = new Object();
         Object object1 = new Object();
@@ -110,11 +104,51 @@ public class ListInterfaceTest {
         list.addAll(secondList);
 
         //then
-        assert list.size() == 3 : "list not added";
+        assert list.get(list.size() - 1) == object1 : "list not added";
+    }
+
+    public static void addAll_CheckIfThrowsUnsopportedOperationException(List list) {
+        //given
+        Object object = new Object();
+        Object object1 = new Object();
+
+        List testList = Arrays.asList(object, object1);
+
+        list.add(object);
+
+        //when
+        boolean flag = false;
+        try {
+            testList.addAll(list);
+        } catch (UnsupportedOperationException e) {
+            flag = true;
+        }
+
+        //then
+        assert flag : "does not throw UnsupportedOperationException";
+
+    }
+
+    public static void addAll_CheckIfThrowsClassCastException(List list) {
+        //given
+        List StringList = Collections.checkedList(Arrays.asList("A", "B"), String.class);
+        List IntegerList = Arrays.asList(1, 2, 3);
+
+        //when
+        boolean flag = false;
+        try {
+            StringList.addAll(IntegerList);
+        } catch (ClassCastException e) {
+            flag = true;
+        }
+
+        //then
+        assert flag : "checked list view does not throw ClassCastException";
+
     }
 
     //---------------------------------------------------------
-    public static void addNewCollectionAtTheBeginning(List list) {
+    public static void addAll_addsNewCollectionAtTheBeginning(List list) {
         //given
         Object object = new Object();
         Object object1 = new Object();
@@ -128,12 +162,11 @@ public class ListInterfaceTest {
         list.addAll(0, secondList);
 
         //then
-        assert list.size() == 4 : "list not added at the begining";
         assert list.get(0) == secondList.get(0) : "list not added ate the begining";
 
     }
 
-    public static void addNewCollectionAtMissingIndex(List list) {
+    public static void addAll_addsNewCollectionAtMissingIndex(List list) {
         //given
         Object object = new Object();
         Object object1 = new Object();
@@ -146,7 +179,7 @@ public class ListInterfaceTest {
         //when
         boolean flag = false;
         try {
-            list.addAll(5, secondList);
+            list.addAll(list.size() + 1, secondList);
         } catch (IndexOutOfBoundsException e) {
             flag = true;
         }
@@ -156,15 +189,12 @@ public class ListInterfaceTest {
 
     }
 
-    public static void addNewCollectionAtNegativeIndex(List list) {
+    public static void addAll_addsNewCollectionAtNegativeIndex(List list) {
         //given
         Object object = new Object();
         Object object1 = new Object();
 
         List secondList = Arrays.asList(object, object1);
-
-        list.add(object);
-        list.add(object1);
 
         //when
         boolean flag = false;
@@ -179,28 +209,27 @@ public class ListInterfaceTest {
 
     }
 
-
     //---------------------------------------------------------
-    public static void clearEmptyList(List list) {
+    public static void clear_clearsEmptyList(List list) {
         //given
-        List secondList = list;
+        List secondList = Collections.emptyList();
 
         //when
-        list.clear();
+        secondList.clear();
 
         //then
-        assert list.size() == 0 : "list not cleared";
+        assert secondList.size() == 0 : "list not cleared";
     }
 
-    public static void clearNotEmptyList(List list) {
+    public static void clear_clearsNotEmptyList(List list) {
         //given
         Object object = new Object();
         Object object1 = new Object();
 
-        List secondList = Arrays.asList(object, object1);
-        //when
         list.add(object);
         list.add(object1);
+
+        //when
         list.clear();
 
         //then
@@ -208,17 +237,17 @@ public class ListInterfaceTest {
     }
 
     //--------------------------------------------------
-    public static void emptyListContainsAnyElement(List list) {
+    public static void contains_checkIfEmptyListContainsAnyElement(List list) {
         //given
-        Object object = new Object();
+        List secondList = Collections.emptyList();
 
         //when and then
 
-        assert list.contains(object) == false : "empty list is not empty";
+        assert list.size() == 0 : "empty list is not empty";
     }
 
 
-    public static void listContainsExistingElement(List list) {
+    public static void contains_checkIfListContainsAddedElement(List list) {
         //given
         Object object = new Object();
         Object object1 = new Object();
@@ -231,7 +260,7 @@ public class ListInterfaceTest {
         assert list.contains(object1) : "existing element not on the list";
     }
 
-    public static void listContainsMissingElement(List list) {
+    public static void contains_checkIfListContainsMissingElement(List list) {
         //given
         Object object = new Object();
         Object object1 = new Object();
@@ -246,8 +275,10 @@ public class ListInterfaceTest {
     }
 
     //----------------------------------------------------
-    public static void emptyListContainsCollection(List list) {
+    public static void containsAll_checkIfEmptyListContainsCollection(List list) {
         //given
+        list.clear();
+
         Object object = new Object();
         Object object1 = new Object();
         Object object2 = new Object();
@@ -261,7 +292,7 @@ public class ListInterfaceTest {
         assert result == false : "emptyList contains list with elements";
     }
 
-    public static void listContainsCollection(List list) {
+    public static void containsAll_checkIfListContainsCollection(List list) {
         //given
         Object object = new Object();
         Object object1 = new Object();
@@ -280,13 +311,13 @@ public class ListInterfaceTest {
         assert result == true : "firstList does not contain secondList";
     }
 
-    public static void listContainsEmptyCollection(List list) {
+    public static void containsAll_checkIfListContainsEmptyCollection(List list) {
         //given
         Object object = new Object();
         Object object1 = new Object();
         Object object2 = new Object();
 
-        List secondList = list;
+        List secondList = Collections.emptyList();
 
         list.add(object);
         list.add(object1);
@@ -300,7 +331,7 @@ public class ListInterfaceTest {
     }
 
     //--------------------------------------------------
-    public static void checkEqualityOfReferences(List list) {
+    public static void equals_checkEqualityOfReferences(List list) {
         //given
         Object object = new Object();
         Object object1 = new Object();
@@ -315,10 +346,10 @@ public class ListInterfaceTest {
         boolean result = list.equals(secondList);
 
         //then
-        assert result : "references are not the same";
+        assert result : "list references are not the same";
     }
 
-    public static void checkEqualityOfValues(List list) {
+    public static void equals_checkEqualityOfValues(List list) {
         //given
         Object object = new Object();
         Object object1 = new Object();
@@ -334,7 +365,7 @@ public class ListInterfaceTest {
         assert result : "lists have different values";
     }
 
-    public static void checkEqualityOfDiffrentLists(List list) {
+    public static void equals_checkEqualityOfDiffrentLists(List list) {
         //given
         Object object = new Object();
         Object object1 = new Object();
@@ -349,11 +380,11 @@ public class ListInterfaceTest {
         boolean result = list.equals(secondList);
 
         //then
-        assert result == false : "list are equal";
+        assert result == false : "lists are equal";
     }
 
     //--------------------------------------------------
-    public static void checkHashcodeOnEqualLists(List list) {
+    public static void hashode_checkHashcodeOnEqualLists(List list) {
         //given
         Object object = new Object();
         Object object1 = new Object();
@@ -371,7 +402,7 @@ public class ListInterfaceTest {
         assert hashcode1 == hashcode2 : "hashcodes are diffrent";
     }
 
-    public static void checkHashcodeOnNotEqualsLists(List list) {
+    public static void hashcode_checkHashcodeOnNotEqualsLists(List list) {
         //given
         Object object = new Object();
         Object object1 = new Object();
@@ -389,12 +420,12 @@ public class ListInterfaceTest {
     }
 
     //-----------------------------------------------------
-    public static void isEmptyListEmpty(List list) {
+    public static void isEmpty_checkIfEmptyListEmpty(List list) {
         //given
+        list.clear();
 
-        //when
+        //when and then
 
-        //then
         assert list.isEmpty() : "list is not empty";
     }
 
@@ -410,17 +441,16 @@ public class ListInterfaceTest {
     }
 
     //----------------------------------------------------------
-    public static void returnIndexOfMissingElement(List list) {
+    public static void get_returnIndexOfMissingElement(List list) {
         //given
         Object object = new Object();
-        Object object1 = new Object();
 
         list.add(object);
 
         //when
         boolean flag = false;
         try {
-            list.get(4);
+            list.get(list.size());
         } catch (IndexOutOfBoundsException e) {
             flag = true;
         }
@@ -428,7 +458,7 @@ public class ListInterfaceTest {
         assert flag : "list contains missing element";
     }
 
-    public static void returnIndexOfExistingElement(List list) {
+    public static void get_returnIndexOfExistingElement(List list) {
         //given
         Object object = new Object();
         Object object1 = new Object();
@@ -444,18 +474,17 @@ public class ListInterfaceTest {
     }
 
     //----------------------------------------------------------
-    public static void checkInstanceOfIterator(List list) {
+    public static void iterator_checkInstanceOfIterator(List list) {
         //given
         Iterator<Object> iterator = list.iterator();
 
-        //when
+        //when and then
 
-        //then
         assert iterator instanceof Iterator : "wrong type of iterator";
     }
 
     //----------------------------------------------------------
-    public static void checkInstanceOfListIterator(List list) {
+    public static void listIterator_checkInstanceOfListIterator(List list) {
         //given
         Iterator<Object> listIterator = list.iterator();
 
@@ -467,7 +496,7 @@ public class ListInterfaceTest {
 
     //----------------------------------------------------------
 
-    public static void returnLastIndexOfElementInEmptyList(List list) {
+    public static void lastIndexOf_returnLastIndexOfElementInEmptyList(List list) {
         //given
         Object object = new Object();
 
@@ -478,7 +507,7 @@ public class ListInterfaceTest {
         assert result.equals(-1) : "should return -1";
     }
 
-    public static void returnLastIndexOfExistingElement(List list) {
+    public static void lastIndexOf_returnLastIndexOfExistingElement(List list) {
         //given
         Object object = new Object();
         Object object1 = new Object();
@@ -496,7 +525,7 @@ public class ListInterfaceTest {
     }
 
     //----------------------------------------------------------
-    public static void removeElementFromEmptyList(List list) {
+    public static void remove_removesElementFromEmptyList(List list) {
         //given
         Object object = new Object();
 
@@ -507,7 +536,7 @@ public class ListInterfaceTest {
         assert flag == false : "removes element not from the list";
     }
 
-    public static void removeExistingElement(List list) {
+    public static void remove_removesExistingElement(List list) {
         //given
         Object object = new Object();
         Object object1 = new Object();
@@ -522,8 +551,9 @@ public class ListInterfaceTest {
         assert result : "element not removed";
     }
 
-    public static void checkIfElementsAreShiftedTotheLeft(List list) {
+    public static void remove_checksIfElementsAreShiftedTotheLeft(List list) {
         //given
+
         Object object = new Object();
         Object object1 = new Object();
         Object object2 = new Object();
@@ -542,7 +572,7 @@ public class ListInterfaceTest {
 
     //---------------------------------------------------------------
 
-    public static void removeNegativeIndex(List list) {
+    public static void remove_removesNegativeIndex(List list) {
         //given
         Object object = new Object();
         Object object1 = new Object();
@@ -563,7 +593,7 @@ public class ListInterfaceTest {
         assert flag : "removes negative index";
     }
 
-    public static void removeExistingIndex(List list) {
+    public static void remove_removesExistingIndex(List list) {
         //given
         Object object = new Object();
         Object object1 = new Object();
@@ -580,7 +610,7 @@ public class ListInterfaceTest {
         assert result.equals(object1) : "removes wrong index";
     }
 
-    public static void removeIndexFromEmptyList(List list) {
+    public static void remove_removesIndexFromEmptyList(List list) {
         //given
 
         //when
@@ -595,7 +625,7 @@ public class ListInterfaceTest {
     }
 
     //---------------------------------------------------------------
-    public static void removeAnotherListFromEmptyList(List list) {
+    public static void removeAll_removeAnotherListFromEmptyList(List list) {
         //given
         Object object = new Object();
         Object object1 = new Object();
@@ -610,7 +640,7 @@ public class ListInterfaceTest {
         assert result == false : "removes elements from empty list";
     }
 
-    public static void removeAnotherListFromExistingList(List list) {
+    public static void removeAll_removesAnotherListFromExistingList(List list) {
         //given
         Object object = new Object();
         Object object1 = new Object();
@@ -627,7 +657,7 @@ public class ListInterfaceTest {
         assert result : "elements not removed";
     }
 
-    public static void removeListWithDiffrentElements(List list) {
+    public static void removeAll_removeListWithDiffrentElements(List list) {
         //given
         Object object = new Object();
         Object object1 = new Object();
@@ -645,11 +675,9 @@ public class ListInterfaceTest {
 
     }
 
-    //---------------------------------------------------------------
-//    Do : test for replaceAll
-    //---------------------------------------------------------------
+//---------------------------------------------------------------
 
-    public static void retainCommonElements(List list) {
+    public static void retainAll_retainsCommonElements(List list) {
         //given
         Object object = new Object();
         Object object1 = new Object();
@@ -668,7 +696,7 @@ public class ListInterfaceTest {
         assert result : "elements not removed";
     }
 
-    public static void checkRetainAllOnNotEqualList(List list) {
+    public static void retainAll_checkRetainAllOnNotEqualList(List list) {
         //given
         Object object = new Object();
         Object object1 = new Object();
@@ -685,7 +713,7 @@ public class ListInterfaceTest {
     }
 
     //---------------------------------------------------------------
-    public static void setElementInTheList(List list) {
+    public static void set_setsElementInTheList(List list) {
         //given
         Object object = new Object();
         Object object1 = new Object();
@@ -701,7 +729,7 @@ public class ListInterfaceTest {
         assert list.get(0).equals(object2) : "element not set";
     }
 
-    public static void setElementOnNegativeIndex(List list) {
+    public static void set_setsElementOnNegativeIndex(List list) {
         //given
         Object object = new Object();
         Object object1 = new Object();
@@ -721,7 +749,7 @@ public class ListInterfaceTest {
         assert flag : "element not set on negative index";
     }
 
-    public static void setNullElement(List list) {
+    public static void set_setsNullElement(List list) {
         //given
         Object object = new Object();
         Object object1 = new Object();
@@ -730,22 +758,22 @@ public class ListInterfaceTest {
         list.add(object1);
 
         //when
-        Object result=list.set(0, null);
+        Object result = list.set(0, null);
         //then
-        assert result==object : "null element not set";
+        assert result == object : "null element not set";
     }
 
     //---------------------------------------------------------------
-    public static void sizeOfEmptyList(List list) {
+    public static void size_sizeOfEmptyList(List list) {
         //given
 
         //when
 
         //then
-        assert list.size()==0 : "empty list is not empty";
+        assert list.size() == 0 : "empty list is not empty";
     }
 
-    public static void sizeOfListWithNullElements(List list) {
+    public static void size_sizeOfListWithNullElements(List list) {
         //given
 
         //when
@@ -753,10 +781,11 @@ public class ListInterfaceTest {
         list.add(null);
         list.add(null);
         //then
-        assert list.size()==3 : "size should be 3";
+        assert list.size() == 3 : "size should be 3";
     }
+
     //---------------------------------------------------------------
-    public static void checkTypeOfSpliterator(List list) {
+    public static void spliterator_checkTypeOfSpliterator(List list) {
         //given
         Object object = new Object();
         Object object1 = new Object();
@@ -770,9 +799,22 @@ public class ListInterfaceTest {
     }
 
     //---------------------------------------------------------------
+
+    public static void sort_sortsByNullComparator(List list) {
+        //given
+        List<String> testList = Arrays.asList("B", "D", "A", "C");
+
+        //when
+        testList.sort(null);
+
+        //then
+        assert testList.get(0).equals("A") : "elements not sorted in a natural ordering";
+    }
+
+    //---------------------------------------------------------------
     public static void sublistWhenEndIndexGreaterThanStartIndex(List list) {
         //given
-        List<Object> result=list;
+        List<Object> result = list;
 
         Object object = new Object();
         Object object1 = new Object();
@@ -783,7 +825,7 @@ public class ListInterfaceTest {
         //when
         boolean flag = false;
         try {
-            list.subList(2,1);
+            list.subList(2, 1);
         } catch (IllegalArgumentException e) {
             flag = true;
         }
@@ -803,21 +845,22 @@ public class ListInterfaceTest {
         //when
         boolean flag = false;
         try {
-            list.subList(-11,0);
+            list.subList(-11, 0);
         } catch (IndexOutOfBoundsException e) {
             flag = true;
         }
         //then
         assert flag : "exception not thrown";
     }
+
     //---------------------------------------------------------------
     public static void toArrayOnEmptyList(List list) {
         //given
 
         //when
-        Object[] array=list.toArray();
+        Object[] array = list.toArray();
         //then
-        assert array.length==0 : "array is not empty";
+        assert array.length == 0 : "array is not empty";
     }
 
     public static void toArrayOnNotEmptyList(List list) {
@@ -829,9 +872,9 @@ public class ListInterfaceTest {
         list.add(object1);
 
         //when
-        Object[] array=list.toArray();
+        Object[] array = list.toArray();
         //then
-        assert array.length==2 : "wrong array length";
+        assert array.length == 2 : "wrong array length";
     }
 
     public static void checkSequenceInToArray(List list) {
@@ -845,7 +888,7 @@ public class ListInterfaceTest {
         list.add(object2);
 
         //when
-        Object[] array=list.toArray();
+        Object[] array = list.toArray();
         //then
         assert array[0].equals(object) : "elements in a wrong order";
         assert array[2].equals(object2) : "elements in a wrong order";
